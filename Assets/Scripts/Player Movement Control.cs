@@ -5,6 +5,8 @@ public class Control : MonoBehaviour
     public float movementSpeed = 5f;
     private Rigidbody2D rb;
     private Vector2 movement;
+    public float jumpForce = 10f;
+    public float dashSpeed = 20f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
