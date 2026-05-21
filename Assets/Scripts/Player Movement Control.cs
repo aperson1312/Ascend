@@ -10,42 +10,71 @@ public class Control : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        movement = Vector2.zero; //player stays still when no keys are pressed
         //MOVEMENT
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            movement.x = -1;
             //left
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            movement.x = 1;
             //right
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            //look up for up dash
+            //look up
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            //look down for down dash/smaller character
+            //smaller character
         }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             //jump
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            //dash (according to arrow controls, diagonal when up and direction pressed together)
-        }
+            Vector2 dashDirection = movement;
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                dashDirection.x = 1;
+                //dash right
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                dashDirection.x = -1;
+                //dash left
+            }
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                dashDirection.y = 1;
+                //dash up
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))//and not touching ground
+            {
+                dashDirection.y = -1;
+                //dash down
+            }
+        }    //dash (according to arrow controls, diagonal when up and direction pressed together)
+        
     }
 }
 
