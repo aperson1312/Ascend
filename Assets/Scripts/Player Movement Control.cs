@@ -7,7 +7,7 @@ public class Control : MonoBehaviour
     private Vector2 movement;
     public float jumpForce = 10f;
     public float dashSpeed = 20f;
-    //public bool isGrounded = false;
+    public bool isGrounded = true; // wall is true to check for wall jump and wall slide maybe...
     public bool canDash = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,7 +42,7 @@ public class Control : MonoBehaviour
             //smaller character
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && isGrounded)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             //jump
