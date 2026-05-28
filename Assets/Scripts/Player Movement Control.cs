@@ -7,6 +7,8 @@ public class Control : MonoBehaviour
     private Vector2 movement;
     public float jumpForce = 10f;
     public float dashSpeed = 20f;
+    //public bool isGrounded = false;
+    public bool canDash = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,15 +20,15 @@ public class Control : MonoBehaviour
     {
         movement = Vector2.zero; //player stays still when no keys are pressed
         //MOVEMENT
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            movement.x = -1;
-            //left
-        }
-
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             movement.x = 1;
+            //left
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            movement.x = -1;
             //right
         }
 
@@ -46,35 +48,60 @@ public class Control : MonoBehaviour
             //jump
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) && canDash)
         {
             Vector2 dashDirection = movement;
+            canDash = false;
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                dashDirection.x = 1;
+                dashDirection.x = 5;
                 //dash right
             }
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                dashDirection.x = -1;
+                dashDirection.x = -5;
                 //dash left
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                dashDirection.y = 1;
+                dashDirection.y = 5;
                 //dash up
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow))//and not touching ground
             {
-                dashDirection.y = -1;
+                dashDirection.y = -5;
                 //dash down
             }
         }    //dash (according to arrow controls, diagonal when up and direction pressed together)
-        
+
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(""))
+        {
+            canDash = true;
+            //dash reset
+        }
+
+        if (collision.gameObject.CompareTag(""))
+        {
+            //wall jump
+        }
+
+        if (collision.gameObject.CompareTag("") && Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            //slow wall slide right
+        }
+
+        if (collision.gameObject.CompareTag("") && Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            //slow wall slide left
+        }
     }
 }
 
