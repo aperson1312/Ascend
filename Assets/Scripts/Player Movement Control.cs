@@ -23,13 +23,13 @@ public class Control : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             movement.x = 1;
-            //left
+            //right
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             movement.x = -1;
-            //right
+            //left
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -82,13 +82,13 @@ public class Control : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(""))
+        if (collision.gameObject.CompareTag("ground"))
         {
             canDash = true;
             //dash reset
         }
 
-        if (collision.gameObject.CompareTag(""))
+        if (collision.gameObject.CompareTag("ground") && !isGrounded)
         {
             //wall jump
         }
