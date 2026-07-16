@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerCollision : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,7 +23,7 @@ public class PlayerCollision : MonoBehaviour
 
         if (collision.gameObject.CompareTag("teleporter"))
         {
-            //teleport player to the next level
+            SceneManager.LoadScene(2);
         }
     }
 }
