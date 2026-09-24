@@ -1,7 +1,6 @@
-using UnityEditor.Build.Profile;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-public class Teleport : MonoBehaviour
+
+public class respawn : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,12 +14,12 @@ public class Teleport : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D (Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            Debug.Log("Next Level");
+            collision.gameObject.transform.position = new Vector3(-4.81f, -2.41f, 0);
+            Debug.Log("Respawned");
         }
     }
 }
