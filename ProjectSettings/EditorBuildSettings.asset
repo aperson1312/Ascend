@@ -25,5 +25,8 @@ EditorBuildSettings:
     guid: 92d10b923ae37a44bbaee2788af78ed8
   - enabled: 1
     path: Assets/Scenes/lv 6.unity
-    guid: 14eca7f4d58075a478cfdb6abdfd2dcf
+    guid: d3fbca1518dc6b246b626dbe8ad1634c
+  - enabled: 1
+    path: Assets/Scenes/lv 7.unity
+    guid: 7ebb3e87e8eb19048a414e445c52b5e2
   m_configObjects: {}

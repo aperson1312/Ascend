@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +16,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.C))
         {
             SceneManager.LoadScene(1);
+            Debug.Log("Game Started");
         }
+    }
+
+    private void StartGame()
+    {
+        
     }
 }
