@@ -20,7 +20,7 @@ public class respawn : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             player = collision.gameObject;
-            Invoke("Respawn", 0.6f);
+            Invoke("Respawn", 0.4f);
         }
     }
     public void Respawn()
