@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 2318030947329048655}
   - component: {fileID: 7850929724361206203}
   - component: {fileID: 8875751408242498739}
-  - component: {fileID: 439176702474138283}
   m_Layer: 0
   m_Name: respawn
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,15 +137,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &439176702474138283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4719711650024911684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb42632a561781048a8f8103a0e10b4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::respawn

@@ -1,35 +1,31 @@
 using UnityEngine;
 
-public class respawn : MonoBehaviour
+public class Respawn : MonoBehaviour
 {
-    GameObject player;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public static Respawn Instance { get; private set; }
+    public GameObject player;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        // Enforce the Singleton pattern
+        if (Instance != null && Instance != this)
         {
-            player = collision.gameObject;
-            Invoke("Respawn", 0.4f);
+            Destroy(gameObject);
+            return;
         }
+
+        Instance = this;
     }
-    public void Respawn()
+    public void RespawnPlayer()
+    {
+        Invoke("InvokeRespawn", 0.4f);
+    }
+    public void InvokeRespawn()
     {
         if (player != null)
         {
-                player.transform.position = new Vector3(-4.81f, -2.41f, 0);
-                Debug.Log("Respawned");
-         
+            Instantiate(player, new Vector2(-4.81f, -2.41f), Quaternion.identity);
+            player.transform.position = new Vector3(-4.81f, -2.41f, 0);
         }
     }
 }

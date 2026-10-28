@@ -22,7 +22,7 @@ public class teleport : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             player = collision.gameObject;
-            Invoke("Teleport", 0.3f);
+            Invoke("Teleport", 0.1f);
             
         }
     }

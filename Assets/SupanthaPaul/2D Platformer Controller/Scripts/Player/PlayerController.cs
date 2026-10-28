@@ -4,7 +4,9 @@ namespace SupanthaPaul
 {
 	public class PlayerController : MonoBehaviour
 	{
-		[SerializeField] private float speed;
+
+        public SpriteRenderer playeSpriteRenderer;
+        [SerializeField] private float speed;
 		[Header("Jumping")]
 		[SerializeField] private float jumpForce;
 		[SerializeField] private float fallMultiplier;
@@ -59,8 +61,7 @@ namespace SupanthaPaul
 
 		// 0 -> none, 1 -> right, -1 -> left
 		private int m_onWallSide = 0;
-		private int m_playerSide = 1;
-
+		public  int m_playerSide = 1;
 
 		void Start()
 		{
@@ -88,14 +89,14 @@ namespace SupanthaPaul
 			var position = transform.position;
 			// check if on wall
 			m_onWall = Physics2D.OverlapCircle((Vector2)position + grabRightOffset, grabCheckRadius, whatIsGround)
-			          || Physics2D.OverlapCircle((Vector2)position + grabLeftOffset, grabCheckRadius, whatIsGround);
+					  || Physics2D.OverlapCircle((Vector2)position + grabLeftOffset, grabCheckRadius, whatIsGround);
 			m_onRightWall = Physics2D.OverlapCircle((Vector2)position + grabRightOffset, grabCheckRadius, whatIsGround);
 			m_onLeftWall = Physics2D.OverlapCircle((Vector2)position + grabLeftOffset, grabCheckRadius, whatIsGround);
 
 			// calculate player and wall sides as integers
 			CalculateSides();
 
-			if((m_wallGrabbing || isGrounded) && m_wallJumping)
+			if ((m_wallGrabbing || isGrounded) && m_wallJumping)
 			{
 				m_wallJumping = false;
 			}
@@ -103,15 +104,15 @@ namespace SupanthaPaul
 			if (isCurrentlyPlayable)
 			{
 				// horizontal movement
-				if(m_wallJumping)
+				if (m_wallJumping)
 				{
 					m_rb.linearVelocity = Vector2.Lerp(m_rb.linearVelocity, (new Vector2(moveInput * speed, m_rb.linearVelocity.y)), 1.5f * Time.fixedDeltaTime);
 				}
 				else
 				{
-					if(canMove && !m_wallGrabbing)
+					if (canMove && !m_wallGrabbing)
 						m_rb.linearVelocity = new Vector2(moveInput * speed, m_rb.linearVelocity.y);
-					else if(!canMove)
+					else if (!canMove)
 						m_rb.linearVelocity = new Vector2(0f, m_rb.linearVelocity.y);
 				}
 				// better jump physics
@@ -139,7 +140,7 @@ namespace SupanthaPaul
 					else
 					{
 						m_dashTime -= Time.deltaTime;
-						if(m_facingRight)
+						if (m_facingRight)
 							m_rb.linearVelocity = Vector2.right * dashSpeed;
 						else
 							m_rb.linearVelocity = Vector2.left * dashSpeed;
@@ -147,13 +148,14 @@ namespace SupanthaPaul
 				}
 
 				// wall grab
-				if(m_onWall && !isGrounded && m_rb.linearVelocity.y <= 0f && m_playerSide == m_onWallSide)
+				if (m_onWall && !isGrounded && m_rb.linearVelocity.y <= 0f && m_playerSide == m_onWallSide)
 				{
 					actuallyWallGrabbing = true;    // for animation
 					m_wallGrabbing = true;
 					m_rb.linearVelocity = new Vector2(moveInput * speed, -slideSpeed);
 					m_wallStick = m_wallStickTime;
-				} else
+				}
+				else
 				{
 					m_wallStick -= Time.deltaTime;
 					actuallyWallGrabbing = false;
@@ -165,11 +167,11 @@ namespace SupanthaPaul
 
 				// enable/disable dust particles
 				float playerVelocityMag = m_rb.linearVelocity.sqrMagnitude;
-				if(m_dustParticle.isPlaying && playerVelocityMag == 0f)
+				if (m_dustParticle.isPlaying && playerVelocityMag == 0f)
 				{
 					m_dustParticle.Stop();
 				}
-				else if(!m_dustParticle.isPlaying && playerVelocityMag > 0f)
+				else if (!m_dustParticle.isPlaying && playerVelocityMag > 0f)
 				{
 					m_dustParticle.Play();
 				}
@@ -203,7 +205,7 @@ namespace SupanthaPaul
 					// dash effect
 					PoolManager.instance.ReuseObject(dashEffect, transform.position, Quaternion.identity);
 					// if player in air while dashing
-					if(!isGrounded)
+					if (!isGrounded)
 					{
 						m_hasDashedInAir = true;
 					}
@@ -211,26 +213,26 @@ namespace SupanthaPaul
 				}
 			}
 			m_dashCooldown -= Time.deltaTime;
-			
+
 			// if has dashed in air once but now grounded
 			if (m_hasDashedInAir && isGrounded)
 				m_hasDashedInAir = false;
-			
+
 			// Jumping
-			if(InputSystem.Jump() && m_extraJumps > 0 && !isGrounded && !m_wallGrabbing)	// extra jumping
+			if (InputSystem.Jump() && m_extraJumps > 0 && !isGrounded && !m_wallGrabbing)   // extra jumping
 			{
 				m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, m_extraJumpForce); ;
 				m_extraJumps--;
 				// jumpEffect
 				PoolManager.instance.ReuseObject(jumpEffect, groundCheck.position, Quaternion.identity);
 			}
-			else if(InputSystem.Jump() && (isGrounded || m_groundedRemember > 0f))	// normal single jumping
+			else if (InputSystem.Jump() && (isGrounded || m_groundedRemember > 0f)) // normal single jumping
 			{
 				m_rb.linearVelocity = new Vector2(m_rb.linearVelocity.x, jumpForce);
 				// jumpEffect
 				PoolManager.instance.ReuseObject(jumpEffect, groundCheck.position, Quaternion.identity);
 			}
-			else if(InputSystem.Jump() && m_wallGrabbing && moveInput!=m_onWallSide )		// wall jumping off the wall
+			else if (InputSystem.Jump() && m_wallGrabbing && moveInput != m_onWallSide)     // wall jumping off the wall
 			{
 				m_wallGrabbing = false;
 				m_wallJumping = true;
@@ -239,7 +241,7 @@ namespace SupanthaPaul
 					Flip();
 				m_rb.AddForce(new Vector2(-m_onWallSide * wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
 			}
-			else if(InputSystem.Jump() && m_wallGrabbing && moveInput != 0 && (moveInput == m_onWallSide))      // wall climbing jump
+			else if (InputSystem.Jump() && m_wallGrabbing && moveInput != 0 && (moveInput == m_onWallSide))      // wall climbing jump
 			{
 				m_wallGrabbing = false;
 				m_wallJumping = true;
@@ -280,6 +282,15 @@ namespace SupanthaPaul
 			Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
 			Gizmos.DrawWireSphere((Vector2)transform.position + grabRightOffset, grabCheckRadius);
 			Gizmos.DrawWireSphere((Vector2)transform.position + grabLeftOffset, grabCheckRadius);
+		}
+
+		private void OnTriggerEnter2D(Collider2D collision)
+		{
+			if (collision.gameObject.CompareTag("Spike"))
+			{
+                Respawn.Instance.RespawnPlayer();
+                Destroy(gameObject);
+            }
 		}
 	}
 }
